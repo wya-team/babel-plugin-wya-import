@@ -2,13 +2,17 @@
 
 const loaderUtils = require('loader-utils');
 
-const dash2camel = (str) => {
-	let arr = str.split("-");
+const parseDash = (str) => {
+	let dashArr = str.split("-");
+	let camelArr = [];
 
-	for (let i = 0; i < arr.length; i++) {
-		arr[i] = `${arr[i].charAt(0).toUpperCase()}${arr[i].substring(1)}`;
+	for (let i = 0; i < dashArr.length; i++) {
+		camelArr[i] = `${dashArr[i].charAt(0).toUpperCase()}${dashArr[i].substring(1)}`;
 	}
-	return arr.join('')
+	return {
+		dashArr,
+		camelArr
+	};
 }
 
 
@@ -19,14 +23,14 @@ module.exports = function(source) {
 
 	let newSource = source;
 
-	let target = source.match(/<vcm?-([a-z]+)([^\s>\/])/g).reduce((pre, cur, index, source) => {
+	let target = source.match(/<vcm?-([a-z\-]+)([^\s>\/])/g).reduce((pre, cur, index, source) => {
 
 		if (source.indexOf(cur) === index) {
 			let dash = cur.replace(/(<vc-?|\s)/g, '');
 
 			pre.push({
 				dash,
-				camel: dash2camel(dash)
+				camel: parseDash(dash).camelArr.join('')
 			})
 		};
 
@@ -34,15 +38,31 @@ module.exports = function(source) {
 	}, []);
 
 	let content = target.reduce((pre, cur) => {
+		let { imports, components } = pre;
+		let importContent;
+		
+		if (cur.dash.includes('-item') || cur.dash.includes('-group')) {
+			let { dashArr, camelArr } = parseDash(cur.dash);
+			importContent = `import ${camelArr.slice(0, -1).join('')} from 'wya-vc/lib/${dashArr.slice(0, -1).join('')}';\n`;
+			components = pre.components + `		'${/^m-/.test(cur.dash) ? 'vc' : 'vc-'}${cur.dash}': ${camelArr.slice(0, -1).join('')}.${camelArr[camelArr.length - 1]},\n`;
+		} else {
+			importContent = `import ${cur.camel} from 'wya-vc/lib/${cur.dash}';\n`;
+			components = pre.components + `		'${/^m-/.test(cur.dash) ? 'vc' : 'vc-'}${cur.dash}': ${cur.camel},\n`;
+		}
+		
+		if (!pre.imports.includes(importContent)) {
+			imports = pre.imports + importContent;
+		}
+
 		return {
-			imports: pre.imports + `import ${cur.camel} from 'wya-vc/lib/${cur.dash}';\n`,
-			components: pre.components + `		'${cur.dash.includes('m-') ? 'vc' : 'vc-'}${cur.dash}': ${cur.camel},\n`
+			imports,
+			components
 		}
 	}, {
 		imports: '\n',
 		components: '\n'
 	})
-
+	
 	let codeSplit;
 
 	codeSplit = newSource.split('<script>');

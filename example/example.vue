@@ -10,6 +10,16 @@
 		</vcm-button>
 		<vcm-radio v-model="22">
 		</vcm-radio>
+
+		<!-- group -->
+		<vc-button-group>
+			<vc-button />
+		</vc-button-group>
+
+		<!-- item -->
+		<vc-form>
+			<vc-form-item />
+		</vc-form>
 	</div>
 </template>
 <script>
