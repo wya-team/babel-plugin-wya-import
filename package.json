@@ -1,0 +1,22 @@
+{
+  "name": "vc-loader",
+  "version": "0.0.1",
+  "description": "for wya-vc",
+  "author": "wya-team",
+  "license": "MIT",
+  "main": "src/loader.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run dev",
+    "dev": "webpack-dev-server --port 4000"
+  },
+  "dependencies": {
+    "loader-utils": "^1.1.0"
+  },
+  "devDependencies": {
+    "html-loader": "^0.5.5",
+    "webpack": "~4.27.0",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
+  }
+}
