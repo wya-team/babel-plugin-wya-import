@@ -17,9 +17,9 @@ const parseDash = (str) => {
 
 
 module.exports = function(source) {
-	const options = loaderUtils.getOptions(this);
+	// const options = loaderUtils.getOptions(this);
 
-	this.cacheable();
+	// this.cacheable();
 
 	let newSource = source;
 

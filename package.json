@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "src/loader.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watch",
     "start": "npm run dev",
     "dev": "webpack-dev-server --port 4000"
   },
@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "html-loader": "^0.5.5",
+    "jest": "^24.1.0",
     "webpack": "~4.27.0",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"
