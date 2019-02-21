@@ -20,6 +20,11 @@
 		<vc-form>
 			<vc-form-item />
 		</vc-form>
+
+		<!-- pane -->
+		<vc-tabs>
+			<vc-tabs-pane />
+		</vc-tabs>
 	</div>
 </template>
 <script>
