@@ -1,5 +1,3 @@
-"use strict";
-
 const loaderUtils = require('loader-utils');
 
 const parseDash = (str) => {
@@ -13,30 +11,38 @@ const parseDash = (str) => {
 		dashArr,
 		camelArr
 	};
-}
+};
 
 
-module.exports = function(source) {
+module.exports = function (source) {
 	let options = {};
 
 	// for webpack
 	if (this && this.webpack) {
 		options = loaderUtils.getOptions(this);
 		this.cacheable && this.cacheable();
+
+		if (/node_modules/.test(this.resourcePath)) {
+			return source;
+		}
 	}
 
 	let newSource = source;
 
-	let target = source.match(/<vcm?-([a-z\-]+)([^\s>\/])/g).reduce((pre, cur, index, source) => {
+	let result = source.match(/<vcm?-([a-z-]+)([^\s>/])/g);
 
-		if (source.indexOf(cur) === index) {
+	if (!result) {
+		return source;
+	}
+	let target = result.reduce((pre, cur, index, old) => {
+		if (old.indexOf(cur) === index) {
 			let dash = cur.replace(/(<vc-?|\s)/g, '');
 
 			pre.push({
 				dash,
 				camel: parseDash(dash).camelArr.join('')
-			})
-		};
+			});
+		}
 
 		return pre;
 	}, []);
@@ -61,11 +67,11 @@ module.exports = function(source) {
 		return {
 			imports,
 			components
-		}
+		};
 	}, {
 		imports: '\n',
 		components: '\n'
-	})
+	});
 	
 	let codeSplit;
 
