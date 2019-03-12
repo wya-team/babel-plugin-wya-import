@@ -9,7 +9,12 @@ let source = `
 	</vc-select>
 </template>
 <script>
+import { Select } from '@wya/vc';
+
 export default {
+	components: {
+		'vc-select': Select
+	}
 }
 </script>
 `;

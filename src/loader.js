@@ -31,16 +31,30 @@ module.exports = function (source) {
 
 	let result = source.match(/<vcm?-([a-z-]+)([^\s>/])/g);
 
+	let comps = [];
+	source.replace(/import[\s]{([A-Z\s,a-z0-9]+)}[\s]from[\s]["']@wya\/vc["']/g, (match, target) => {
+		target.replace(/[\s]+/g, '').split(',').forEach(i => {
+			!comps.includes(i) && comps.push(i);
+		});
+		return match;
+	})
 	if (!result) {
 		return source;
 	}
 	let target = result.reduce((pre, cur, index, old) => {
 		if (old.indexOf(cur) === index) {
 			let dash = cur.replace(/(<vc-?|\s)/g, '');
+			let camel = parseDash(dash).camelArr.join('');
+			let template = `${/^m-/.test(dash) ? 'vc' : 'vc-'}${dash}`;
 
+			let hasImport = comps.includes(camel);
+			let hasComp = (new RegExp(`['"]${template}['"]:[\\s]${camel}`)).test(source);
 			pre.push({
 				dash,
-				camel: parseDash(dash).camelArr.join('')
+				template,
+				camel,
+				hasImport,
+				hasComp,
 			});
 		}
 
@@ -50,14 +64,14 @@ module.exports = function (source) {
 	let content = target.reduce((pre, cur) => {
 		let { imports, components } = pre;
 		let importContent;
-		
+
 		if (/(-item|-pane|-group|-menu)$/.test(cur.dash)) {
 			let { dashArr, camelArr } = parseDash(cur.dash);
-			importContent = `import ${camelArr.slice(0, -1).join('')} from 'wya-vc/lib/${dashArr.slice(0, -1).join('')}';\n`;
-			components = pre.components + `		'${/^m-/.test(cur.dash) ? 'vc' : 'vc-'}${cur.dash}': ${camelArr.slice(0, -1).join('')}.${camelArr[camelArr.length - 1]},\n`;
+			importContent = cur.hasImport ? '' : `import ${camelArr.slice(0, -1).join('')} from '@wya/vc/lib/${dashArr.slice(0, -1).join('')}';\n`;
+			components = pre.components + (cur.hasComp ? '' : `		'${cur.template}': ${camelArr.slice(0, -1).join('')}.${camelArr[camelArr.length - 1]},\n`);
 		} else {
-			importContent = `import ${cur.camel} from 'wya-vc/lib/${cur.dash}';\n`;
-			components = pre.components + `		'${/^m-/.test(cur.dash) ? 'vc' : 'vc-'}${cur.dash}': ${cur.camel},\n`;
+			importContent = cur.hasImport ? '' : `import ${cur.camel} from '@wya/vc/lib/${cur.dash}';\n`;
+			components = pre.components + (cur.hasComp ? '' : `		'${cur.template}': ${cur.camel},\n`);
 		}
 		
 		if (!pre.imports.includes(importContent)) {

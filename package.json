@@ -1,6 +1,6 @@
 {
-  "name": "vc-loader",
-  "version": "0.0.4",
+  "name": "@wya/vc-loader",
+  "version": "0.1.1",
   "description": "for wya-vc",
   "author": "wya-team",
   "license": "MIT",
@@ -8,7 +8,8 @@
   "scripts": {
     "test": "jest --watch",
     "start": "npm run dev",
-    "dev": "webpack-dev-server --port 4000"
+    "dev": "webpack-dev-server --port 4000",
+    "pub": "npm publish --access public"
   },
   "dependencies": {
     "loader-utils": "^1.1.0"
