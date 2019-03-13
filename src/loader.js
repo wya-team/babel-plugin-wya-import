@@ -65,7 +65,7 @@ module.exports = function (source) {
 		let { imports, components } = pre;
 		let importContent;
 
-		if (/(-item|-pane|-group|-menu)$/.test(cur.dash)) {
+		if (/(-item|-pane|-group|-menu|-column)$/.test(cur.dash)) {
 			let { dashArr, camelArr } = parseDash(cur.dash);
 			importContent = cur.hasImport ? '' : `import ${camelArr.slice(0, -1).join('')} from '@wya/vc/lib/${dashArr.slice(0, -1).join('')}';\n`;
 			components = pre.components + (cur.hasComp ? '' : `		'${cur.template}': ${camelArr.slice(0, -1).join('')}.${camelArr[camelArr.length - 1]},\n`);
