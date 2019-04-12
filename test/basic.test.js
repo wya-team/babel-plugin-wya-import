@@ -4,6 +4,7 @@ let source = `
 	<vc-select />
 	<vcm-select />
 	<vc-table-column />
+	<vcm-form />
 	<vc-select>
 		<vc-option-group>22</vc-option-group>
 		<vc-option>22</vc-option>

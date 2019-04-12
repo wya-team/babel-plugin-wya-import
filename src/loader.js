@@ -79,6 +79,9 @@ module.exports = function (source) {
 			components = pre.components + (cur.hasComp ? '' : `		'${cur.template}': ${cur.camel},\n`);
 		}
 		
+		if (importContent) {
+			importContent = importContent.replace(/lib\/m-([^']+)/, 'lib/$1/index.m');
+		}
 		if (!pre.imports.includes(importContent)) {
 			imports = pre.imports + importContent;
 		}
