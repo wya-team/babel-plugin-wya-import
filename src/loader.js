@@ -27,12 +27,26 @@ module.exports = function (source) {
 		}
 	}
 
+	let excludeRegex = /(date-picker|picker)/;
 	// <vcm-xx -> <vc-xx mobile
 	let newSource = source
-		.replace(/<vcm-([^\s>/]+)/g, `<vc-$1 mobile`)
-		.replace(/<\/vcm-([^>]+)/g, `</vc-$1`);
+		.replace(/<vcm-([^\s>/]+)/g, (_, $1) => {
+			if (excludeRegex.test($1)) {
+				return _;
+			} else {
+				return `<vc-${$1} mobile`
+			}
+			
+		})
+		.replace(/<\/vcm-([^>]+)/g, (_, $1) => {
+			if (excludeRegex.test($1)) {
+				return _;
+			} else {
+				return `</vc-${$1}`
+			}
+		});
 
-	let result = newSource.match(/<vc-([a-z-]+)([^\s>/])/g);
+	let result = newSource.match(/<vcm?-([a-z-]+)([^\s>/])/g);
 
 	let comps = [];
 	newSource.replace(/import[\s]{([A-Z\s,a-z0-9]+)}[\s]from[\s]["']@wya\/vc["']/g, (match, target) => {
@@ -48,8 +62,7 @@ module.exports = function (source) {
 		if (old.indexOf(cur) === index) {
 			let dash = cur.replace(/(<vc-?|\s)/g, '');
 			let camel = parseDash(dash).camelArr.join('');
-			let template = `vc-${dash}`;
-			// console.log(template);
+			let template = `${/^m-/.test(dash) ? 'vc' : 'vc-'}${dash}`;
 			let hasImport = comps.includes(camel);
 			let hasComp = (new RegExp(`['"]${template}['"]:[\\s]${camel}`)).test(source);
 			pre.push({

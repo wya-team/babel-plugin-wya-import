@@ -3,6 +3,9 @@ let source = `
 <template>
 	<vc-select />
 	<vcm-select />
+	<vcm-date-picker />
+	<vcm-form />
+	<vc-date-picker />
 	<vc-table-column />
 	<vc-select>
 		<vc-option-group>22</vc-option-group>
@@ -17,6 +20,13 @@ let source = `
 			<vcm-input type="text" v-modle="value" />
 		</vcm-form-item>
 	</vcm-form>
+
+	<vc-date-picker>
+		div
+	</vc-date-picker>
+	<vcm-date-picker>
+		div
+	</vcm-date-picker>
 </template>
 <script>
 import { Select } from '@wya/vc';
