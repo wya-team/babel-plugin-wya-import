@@ -27,12 +27,15 @@ module.exports = function (source) {
 		}
 	}
 
-	let newSource = source;
+	// <vcm-xx -> <vc-xx mobile
+	let newSource = source
+		.replace(/<vcm-([^\s>/]+)/g, `<vc-$1 mobile`)
+		.replace(/<\/vcm-([^>]+)/g, `</vc-$1`);
 
-	let result = source.match(/<vcm?-([a-z-]+)([^\s>/])/g);
+	let result = newSource.match(/<vc-([a-z-]+)([^\s>/])/g);
 
 	let comps = [];
-	source.replace(/import[\s]{([A-Z\s,a-z0-9]+)}[\s]from[\s]["']@wya\/vc["']/g, (match, target) => {
+	newSource.replace(/import[\s]{([A-Z\s,a-z0-9]+)}[\s]from[\s]["']@wya\/vc["']/g, (match, target) => {
 		target.replace(/[\s]+/g, '').split(',').forEach(i => {
 			!comps.includes(i) && comps.push(i);
 		});
@@ -45,8 +48,8 @@ module.exports = function (source) {
 		if (old.indexOf(cur) === index) {
 			let dash = cur.replace(/(<vc-?|\s)/g, '');
 			let camel = parseDash(dash).camelArr.join('');
-			let template = `${/^m-/.test(dash) ? 'vc' : 'vc-'}${dash}`;
-
+			let template = `vc-${dash}`;
+			// console.log(template);
 			let hasImport = comps.includes(camel);
 			let hasComp = (new RegExp(`['"]${template}['"]:[\\s]${camel}`)).test(source);
 			pre.push({
@@ -116,8 +119,9 @@ module.exports = function (source) {
 
 	// 无法使用vc-option, iview内部正则匹配问题
 	newSource = newSource
-		.replace(new RegExp(`<vc-option(?!-)`, 'g'), `<i-option`)
-		.replace(new RegExp(`<\/vc-option>`, 'g'), `<\/i-option>`)
-		.replace(new RegExp(`'vc-option'`), `'i-option'`)
+		.replace(/<vc-option(?!-)/g, `<i-option`)
+		.replace(/<\/vc-option>/g, `<\/i-option>`)
+		.replace(/'vc-option'/, `'i-option'`)
+
 	return newSource;
 };

@@ -12,6 +12,11 @@ let source = `
 		// <vc-transition />
 		<transition-group></transition-group>
 	</vc-transition-fade>
+	<vcm-form>
+		<vcm-form-item :rules="{}">
+			<vcm-input type="text" v-modle="value" />
+		</vcm-form-item>
+	</vcm-form>
 </template>
 <script>
 import { Select } from '@wya/vc';
