@@ -69,10 +69,12 @@ module.exports = function (source) {
 		 */
 		if (
 			/(-item|-pane|-group|-menu|-column)$/.test(cur.dash)
-			|| /(transition-)/.test(cur.dash)
+			|| /(transition-|input-)/.test(cur.dash)
 		) {
 			let { dashArr, camelArr } = parseDash(cur.dash);
-			importContent = cur.hasImport ? '' : `import ${camelArr.slice(0, -1).join('')} from '@wya/vc/lib/${dashArr.slice(0, -1).join('')}';\n`;
+
+			importContent = cur.hasImport ? '' : `import ${camelArr.slice(0, -1).join('')} from '@wya/vc/lib/${dashArr.slice(0, -1).join('-')}';\n`;
+
 			components = pre.components + (cur.hasComp ? '' : `		'${cur.template}': ${camelArr.slice(0, -1).join('')}.${camelArr[camelArr.length - 1]},\n`);
 		} else {
 			importContent = cur.hasImport ? '' : `import ${cur.camel} from '@wya/vc/lib/${cur.dash}';\n`;
