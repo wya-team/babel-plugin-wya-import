@@ -3,6 +3,7 @@ let source = `
 <template>
 	<vc-select />
 	<vcm-select />
+	<vcm-input-number />
 	<vc-table-column />
 	<vcm-form />
 	<vc-select>

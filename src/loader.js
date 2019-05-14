@@ -119,10 +119,5 @@ module.exports = function (source) {
 			? codeSplit[0] + 'const config = {' + '\n	components: {' + content.components + '	},\n' + codeSplit[1]
 			: codeSplit[0] + 'export default {' + '\n	components: {' + content.components + '	},\n' + codeSplit[1];
 
-	// 无法使用vc-option, iview内部正则匹配问题
-	newSource = newSource
-		.replace(new RegExp(`<vc-option(?!-)`, 'g'), `<i-option`)
-		.replace(new RegExp(`<\/vc-option>`, 'g'), `<\/i-option>`)
-		.replace(new RegExp(`'vc-option'`), `'i-option'`)
 	return newSource;
 };
