@@ -68,7 +68,7 @@ module.exports = function (source) {
 		 * 常用组件与特殊组件
 		 */
 		if (
-			/(-item|-pane|-group|-menu|-column)$/.test(cur.dash)
+			/(-item|-pane|-group|-menu|-column|-view)$/.test(cur.dash)
 			|| /(transition-|input-)/.test(cur.dash)
 		) {
 			let { dashArr, camelArr } = parseDash(cur.dash);
