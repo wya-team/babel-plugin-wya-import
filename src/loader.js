@@ -69,7 +69,7 @@ module.exports = function (source) {
 		 */
 		if (
 			/(-item|-pane|-group|-menu|-column|-view)$/.test(cur.dash)
-			|| /(transition-|input-)/.test(cur.dash)
+			|| /(transition-|input-|tree-)/.test(cur.dash)
 		) {
 			let { dashArr, camelArr } = parseDash(cur.dash);
 
