@@ -4,8 +4,12 @@ let source = `
 	<vc-select />
 	<vcm-select />
 	<vcm-input-number />
+	<vcm-table />
 	<vc-table-column />
+	<vc-table-item />
 	<vcm-form />
+	<vcm-marquee />
+	<vc-marquee />
 	<vc-select>
 		<vc-option-group>22</vc-option-group>
 		<vc-option>22</vc-option>
@@ -16,9 +20,10 @@ let source = `
 	</vc-transition-fade>
 </template>
 <script>
-import { Select } from '@wya/vc';
+import { MTable, Select, Portal } from '@wya/vc';
+import Table from '@wya/vc/lib/table';
 
-export default {
+export const config = {
 	components: {
 		'vc-select': Select
 	}
