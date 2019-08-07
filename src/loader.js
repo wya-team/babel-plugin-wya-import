@@ -13,7 +13,7 @@ const parseKebab = (str) => {
 	};
 };
 
-module.exports = function (source) {
+module.exports = function(source) {
 	let options = {};
 
 	// for webpack
@@ -65,7 +65,7 @@ module.exports = function (source) {
 			 */
 			importContent = hasImport ? '' : `import ${camel} from '@wya/vc/lib/${kebab}';\n`;
 			compContent = hasComp ? '' : `		'${compKey}': ${compValue},\n`;
-			
+
 			if (importContent) {
 				importContent = importContent.replace(/lib\/m-([^']+)/, 'lib/$1/index.m');
 			}
@@ -108,11 +108,11 @@ module.exports = function (source) {
 			portalTag = `const ${portalKey[i]} = {`;
 			isPortal = newSource.includes(portalTag);
 
-			if(isPortal) break;
+			if (isPortal) break;
 		}
 
 		let tag = isPortal 
-			? portalTag
+			? portalTag 
 			: 'export default {';
 
 		codeSplit = newSource.split(tag);
