@@ -5,11 +5,15 @@ let source = `
 	<vcm-select />
 	<vcm-input-number />
 	<vcm-table />
+	<vcm-table-column />
 	<vc-table-column />
 	<vc-table-item />
 	<vcm-form />
+	<vcm-form-item />
 	<vcm-marquee />
 	<vc-marquee />
+	<vc-form />
+	<vc-form-item />
 	<vc-select>
 		<vc-option-group>22</vc-option-group>
 		<vc-option>22</vc-option>

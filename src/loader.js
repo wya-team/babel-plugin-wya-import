@@ -50,7 +50,7 @@ module.exports = function(source) {
 
 			if (isChild) {
 				camel = upper.slice(0, -1).join('');
-				kebab = lower.slice(0, -1).join('');
+				kebab = lower.slice(0, -1).join('-');
 				compValue = `${camel}.${upper[upper.length - 1]}`;
 			}
 
