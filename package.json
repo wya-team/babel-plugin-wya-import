@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "src/loader.js",
   "scripts": {
-    "test": "jest --watch",
+    "test": "jest --watch --updateSnapshot",
     "start": "npm run dev",
     "dev": "webpack-dev-server --port 4000",
     "pub": "npm publish --access public"

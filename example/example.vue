@@ -1,44 +1,33 @@
 <template>
-	<div>
-		<vc-select />
-		<vc-select></vc-select>
-		<vc-select></vc-select>
-		<vc-form/>
-		<vc-form />
-		<vcm-select />
-		<vcm-button>
-		</vcm-button>
-		<vcm-radio v-model="22">
-		</vcm-radio>
-
-		<!-- group -->
-		<vc-button-group>
-			<vc-button />
-		</vc-button-group>
-
-		<!-- item -->
-		<vc-form>
-			<vc-form-item />
-		</vc-form>
-
-		<!-- pane -->
-		<vc-tabs>
-			<vc-tabs-pane />
-		</vc-tabs>
-	</div>
+	<vc-select />
+	<vcm-select />
+	<vcm-input-number />
+	<vcm-table />
+	<vcm-table-column />
+	<vc-table-column />
+	<vc-table-item />
+	<vcm-form />
+	<vcm-form-item />
+	<vcm-marquee />
+	<vc-marquee />
+	<vc-form />
+	<vc-form-item />
+	<vc-select>
+		<vc-option-group>22</vc-option-group>
+		<vc-option>22</vc-option>
+	</vc-select>
+	<vc-transition-fade>
+		// <vc-transition />
+		<transition-group></transition-group>
+	</vc-transition-fade>
 </template>
 <script>
-import { Test } from 'xxx'; 
+import { MTable, Select, Portal } from '@wya/vc';
+import Table from '@wya/vc/lib/table';
 
-export default {
-	name: 'test',
+export const config = {
 	components: {
-		'tpl-test': Test
-	},
-	data () {
-		return {
-			value: ''
-		}
+		'vc-select': Select
 	}
 }
 </script>
