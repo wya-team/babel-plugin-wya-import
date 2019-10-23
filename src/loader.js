@@ -21,7 +21,14 @@ module.exports = function(source) {
 		options = loaderUtils.getOptions(this);
 		this.cacheable && this.cacheable();
 
-		if (/node_modules/.test(this.resourcePath)) {
+		let { exclude } = options; 
+		exclude = exclude || /node_modules/;
+		
+		let disabled =  typeof exclude === 'function' 
+			? exclude(this.resourcePath) 
+			: exclude.test(this.resourcePath);
+			
+		if (disabled) {
 			return source;
 		}
 	}
