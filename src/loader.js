@@ -21,7 +21,7 @@ module.exports = function(source) {
 		options = loaderUtils.getOptions(this);
 		this.cacheable && this.cacheable();
 
-		let { exclude } = options; 
+		let { exclude } = options || {}; 
 		exclude = exclude || /node_modules/;
 		
 		let disabled =  typeof exclude === 'function' 
