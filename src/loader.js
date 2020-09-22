@@ -53,7 +53,7 @@ module.exports = function(source) {
 			let camel = upper.join('');
 			let compKey = `${/^m-/.test(kebab) ? 'vc' : 'vc-'}${kebab}`;
 			let compValue = camel;
-			let isChild = /(-item|-pane|-group|-menu|-column|-view)$/.test(kebab) || /(transition-|input-|tree-)/.test(kebab);
+			let isChild = /(-item|-pane|-group|-menu|-column|-view)$/.test(kebab) || /(transition-|input-|tree-|steps-)/.test(kebab);
 
 			if (isChild) {
 				camel = upper.slice(0, -1).join('');
