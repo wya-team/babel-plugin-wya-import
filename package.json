@@ -1,12 +1,12 @@
 {
   "name": "@wya/vc-loader",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "for wya-vc",
   "author": "wya-team",
   "license": "MIT",
   "main": "src/loader.js",
   "scripts": {
-    "test": "jest --watch --updateSnapshot",
+    "test": "jest --watchAll --updateSnapshot",
     "start": "npm run dev",
     "dev": "webpack-dev-server --port 4000",
     "pub": "npm publish --access public"
@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "html-loader": "^0.5.5",
-    "jest": "^24.1.0",
+    "jest": "^26.6.3",
     "webpack": "~4.27.0",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"

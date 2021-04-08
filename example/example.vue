@@ -20,6 +20,10 @@
 		// <vc-transition />
 		<transition-group></transition-group>
 	</vc-transition-fade>
+	<vc-steps-bar />
+	<vc-steps>
+		<vc-step></vc-step>
+	</vc-steps>
 </template>
 <script>
 import { MTable, Select, Portal } from '@wya/vc';

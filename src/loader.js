@@ -53,11 +53,18 @@ module.exports = function(source) {
 			let camel = upper.join('');
 			let compKey = `${/^m-/.test(kebab) ? 'vc' : 'vc-'}${kebab}`;
 			let compValue = camel;
-			let isChild = /(-item|-pane|-group|-menu|-column|-view)$/.test(kebab) || /(transition-|input-|tree-|steps-)/.test(kebab);
+			let isChild = /(-item|-pane|-group|-menu|-column|-view)$/.test(kebab) || /(transition-|input-|tree-|steps-|theme-)/.test(kebab);
 
 			if (isChild) {
 				camel = upper.slice(0, -1).join('');
 				kebab = lower.slice(0, -1).join('-');
+				compValue = `${camel}.${upper[upper.length - 1]}`;
+			}
+
+			// 特殊
+			if (/step$/.test(kebab)) {
+				camel = 'Steps';
+				kebab = 'steps';
 				compValue = `${camel}.${upper[upper.length - 1]}`;
 			}
 
